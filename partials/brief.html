@@ -1,0 +1,24 @@
+<div class="brief-panel" id="property-brief">
+  <div class="brief-progress" aria-label="Step 1 of 2: Your preferences" id="brief-progress"><span class="active">01 <span>Your preferences</span></span><span id="brief-step-two">02 <span>Let’s connect</span></span></div>
+  <form id="enquiry-form" novalidate>
+    <h3>What does home look like to you?</h3><p class="form-note">Four simple preferences. A more focused conversation.</p>
+    <div class="brief-grid">
+      <div class="brief-field"><label for="purpose">I’m looking for <span aria-hidden="true">*</span></label><select id="purpose" name="purpose" required aria-describedby="purpose-error"><option value="">Select your preference</option><option>A home to live in</option><option>A second home</option><option>An investment</option></select><p class="field-error" id="purpose-error" hidden></p></div>
+      <div class="brief-field"><label for="propertyType">Property type <span aria-hidden="true">*</span></label><select id="propertyType" name="propertyType" required aria-describedby="propertyType-error"><option value="">Select your preference</option><option>Villa</option><option>Apartment</option><option>Penthouse</option><option>Open to guidance</option></select><p class="field-error" id="propertyType-error" hidden></p></div>
+      <div class="brief-field"><label for="area">Preferred area <span aria-hidden="true">*</span></label><select id="area" name="area" required aria-describedby="area-error"><option value="">Select your preference</option><option>Palm Jumeirah</option><option>Downtown Dubai</option><option>Dubai Marina</option><option>Open to guidance</option></select><p class="field-error" id="area-error" hidden></p></div>
+      <div class="brief-field"><label for="budget">Budget <span aria-hidden="true">*</span></label><select id="budget" name="budget" required aria-describedby="budget-error"><option value="">Select your preference</option><option>AED 2M–5M</option><option>AED 5M–10M</option><option>AED 10M–20M</option><option>AED 20M+</option><option>Let’s discuss</option></select><p class="field-error" id="budget-error" hidden></p></div>
+    </div>
+    <p id="brief-error" class="field-error" role="alert" hidden></p>
+    <button type="submit" class="action action-gold brief-submit" id="prepare-brief">Prepare my property brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></button>
+    <p class="privacy-note">All preferences are required. Next, choose WhatsApp or email to send your brief. Nothing is sent automatically.</p>
+  </form>
+  <div id="brief-result" class="brief-result" hidden>
+    <span class="result-icon" aria-hidden="true">✓</span><h3 id="result-heading" tabindex="-1">Your next chapter starts here.</h3><p class="form-note">Your brief is ready. Send it directly to Tutmey to begin your search.</p>
+    <dl class="brief-summary"><div><dt>Looking for</dt><dd data-summary="purpose"></dd></div><div><dt>Property</dt><dd data-summary="propertyType"></dd></div><div><dt>Area</dt><dd data-summary="area"></dd></div><div><dt>Budget</dt><dd data-summary="budget"></dd></div></dl>
+    <a id="send-whatsapp" class="action action-gold brief-submit" target="_blank" rel="noopener noreferrer">Send on WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+    <a id="send-email" class="action action-outline brief-submit mt-3">Open in email <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a>
+    <p class="privacy-note">Review the draft and press Send in your chosen app. No message has been sent yet. If an app does not open, call <a href="tel:+971555172530">+971 55 517 2530</a>.</p>
+    <button type="button" class="edit-brief" id="edit-brief">← Edit my preferences</button>
+  </div>
+  <noscript><p class="noscript-note">To discuss your preferences, <a href="https://wa.me/971555172530">contact us on WhatsApp</a> or email <a href="mailto:info@tutmey.com">info@tutmey.com</a>.</p></noscript>
+</div>
