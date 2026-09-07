@@ -276,7 +276,7 @@ img { max-width:100%; }
  .hero-content{padding-top:120px;padding-bottom:120px} .hero h1{font-size:clamp(48px,11.5vw,64px);line-height:1.05;margin:24px 0 40px}
  .hero .eyebrow{font-size:10px;letter-spacing:.14em;gap:12px;max-width:300px} .hero .eyebrow:before{width:24px;flex-shrink:0}
  .hero{min-height:640px;height:100svh} .hero-bottom{bottom:24px} .section{padding-block:72px} .section h2{font-size:42px}
- .intro h2 br{display:none} .intro-copy p{font-size:16px} .collection-grid{grid-template-columns:1fr;gap:48px}
+ .intro h2 br{display:initial} .intro-copy p{font-size:16px} .collection-grid{grid-template-columns:1fr;gap:48px}
  .card-image{aspect-ratio:16/10} .collection-card h3{font-size:34px} .card-meta{font-size:12px} .collection-card p{font-size:16px;max-width:none}
  .collection-card .text-link{font-size:14px} .collection-note{margin-top:32px}
  .process-grid{grid-template-columns:1fr;gap:32px} .process-grid h3{margin-top:16px}

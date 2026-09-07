@@ -21,7 +21,7 @@ async function configureMotion() {
     smoothScroll = new LenisConstructor({
       autoRaf: true, lerp: 0.14, smoothWheel: true, syncTouch: false,
       anchors: { offset: -144 },
-      prevent: node => !!node.closest('dialog, select, textarea, [data-native-scroll]'),
+      prevent: node => !!node.closest('dialog, select'),
     });
     if (document.querySelector('dialog[open]')) smoothScroll.stop();
   } catch { /* Native scrolling remains available if the optional enhancement cannot load. */ }

@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/postcss';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const siteUrl = (process.env.SITE_URL || 'https://tutmey.com').replace(/\/$/, '') + '/';
+const siteUrl = (process.env.SITE_URL || 'https://tutmey.com').replace(/^http:\/\//, 'https://').replace(/\/$/, '') + '/';
 
 /** Build-time partials keep every delivered page complete HTML, including all SEO content. */
 export default defineConfig({
@@ -22,6 +22,7 @@ export default defineConfig({
       this.emitFile({ type:'asset', fileName:'sitemap.xml', source:'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>' });
       this.emitFile({ type:'asset', fileName:'robots.txt', source:'User-agent: *\nAllow: /\nSitemap: ' + siteUrl + 'sitemap.xml\n' });
       this.emitFile({ type:'asset', fileName:'.nojekyll', source:'' });
+      if (existsSync('CNAME')) this.emitFile({ type:'asset', fileName:'CNAME', source:readFileSync('CNAME','utf8') });
     },
     handleHotUpdate({ file, server }) {
       if (file.includes('/partials/') || file.includes('\\partials\\')) {

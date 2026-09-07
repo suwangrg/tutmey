@@ -28,6 +28,10 @@ jobs:
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Verify the Pages publishing source
+        run: node scripts/check-pages-source.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Install dependencies
         run: npm ci
       - name: Test enquiry handoffs

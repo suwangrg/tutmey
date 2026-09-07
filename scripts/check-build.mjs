@@ -2,7 +2,7 @@ import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from '
 import { resolve, dirname } from 'node:path';
 
 const root = resolve('dist');
-const siteUrl = (process.env.SITE_URL || 'https://tutmey.com').replace(/\/$/, '') + '/';
+const siteUrl = (process.env.SITE_URL || 'https://tutmey.com').replace(/^http:\/\//, 'https://').replace(/\/$/, '') + '/';
 const pages = readdirSync(root).filter(file => file.endsWith('.html'));
 const failures = [];
 const idsByPage = new Map(pages.map(page => [page, new Set([...readFileSync(resolve(root,page),'utf8').matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]))]));
@@ -11,6 +11,9 @@ const titles = new Set();
 for (const page of pages) {
   const html = readFileSync(resolve(root,page),'utf8');
   if (html.includes('<!-- include:')) failures.push(page+': unresolved HTML partial');
+  if (/src="[^\"]*\.ts"/.test(html)) failures.push(page+': uncompiled TypeScript in public HTML');
+  if (!/<link[^>]+rel="stylesheet"/.test(html)) failures.push(page+': missing compiled stylesheet');
+  if (!html.includes('<header') || !html.includes('<footer')) failures.push(page+': missing shared header or footer');
   if ((html.match(/<h1[\s>]/g)||[]).length !== 1) failures.push(page+': requires exactly one h1');
   const title = html.match(/<title>(.*?)<\/title>/)?.[1];
   if (!title || titles.has(title)) failures.push(page+': missing or duplicate title');
@@ -39,6 +42,14 @@ writeFileSync(notFound, readFileSync(notFound,'utf8').replace(/\b(src|href)="\.\
 const assets = readdirSync(resolve(root,'assets')).map(name => ({ name, bytes:statSync(resolve(root,'assets',name)).size }));
 const js = assets.filter(asset => asset.name.endsWith('.js'));
 const css = assets.filter(asset => asset.name.endsWith('.css'));
+for (const asset of css) {
+  const cssPath = resolve(root,'assets',asset.name);
+  for (const match of readFileSync(cssPath,'utf8').matchAll(/url\(\s*["']?([^\s"')]+)["']?\s*\)/g)) {
+    const url = match[1];
+    if (/^(data:|https?:|#)/.test(url)) continue;
+    if (!existsSync(resolve(dirname(cssPath),decodeURIComponent(url.split('?')[0])))) failures.push(asset.name+': missing CSS asset '+url);
+  }
+}
 if (js.reduce((sum,asset)=>sum+asset.bytes,0)>120_000) failures.push('JavaScript exceeded 120 KB uncompressed budget');
 if (failures.length) { console.error(failures.join('\n')); process.exit(1); }
 console.log('Verified '+pages.length+' HTML pages, unique metadata, local links, anchors, structured data and footer contacts.');
