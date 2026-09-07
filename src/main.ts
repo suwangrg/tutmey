@@ -1,4 +1,9 @@
 import './styles.css';
+import '@fontsource/cormorant-garamond/latin-400.css';
+import '@fontsource/cormorant-garamond/latin-400-italic.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import 'lenis/dist/lenis.css';
 import { areas, prepareEnquiry, validateBrief, type PropertyBrief } from './enquiry';
 import type Lenis from 'lenis';
 

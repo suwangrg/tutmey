@@ -4,7 +4,6 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const siteUrl = (process.env.SITE_URL || 'https://tutmey.com').replace(/\/$/, '') + '/';
-let isBuild = false;
 
 /** Build-time partials keep every delivered page complete HTML, including all SEO content. */
 export default defineConfig({
@@ -12,7 +11,6 @@ export default defineConfig({
   css: { postcss: { plugins: [tailwindcss()] } },
   plugins: [{
     name: 'tutmey-html-partials',
-    configResolved(config) { isBuild = config.command === 'build'; },
     transformIndexHtml: { order: 'pre', handler(html) {
       return html.replace(/<!-- include:([a-z-]+) -->/g, (_, name: string) =>
         readFileSync(resolve('partials', name + '.html'), 'utf8'))
@@ -31,8 +29,7 @@ export default defineConfig({
       }
     },
   }],
-  // A second pass makes the 404 work even when an unknown URL has multiple path segments.
-  // Ordinary page assets remain relative, so project Pages paths work without client routing.
+  // Relative assets support repository subpaths without a client-side router.
   build: {
     target: 'es2022',
     rolldownOptions: { input: Object.fromEntries(readdirSync('.').filter(file => file.endsWith('.html')).map(file => [file.replace('.html',''), resolve(file)])) },
